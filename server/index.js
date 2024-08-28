@@ -9,7 +9,7 @@ app.use(express.json());
 const dbConnect = require('./config/database');
 dbConnect();
 
-const { socketHandler } = require('./socket/socketHandler'); // Importing socketHandler
+const socketHandler = require('./socket/socketHandler'); // Importing socketHandler
 const server = http.createServer(app);
 socketHandler(server); // Using socketHandler
 

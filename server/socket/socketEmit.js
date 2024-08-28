@@ -11,7 +11,8 @@ const socketEmit = (socket) => {
     });
 
     socket.on('sendCMD', (data) => {
-        const { roomId, sender, message } = data;
+        const parsedData = (typeof data === 'string') ? JSON.parse(data) : data
+        const {roomId, sender, message} = parsedData
         console.log('Message:', roomId, sender, message);
         try {
             socket.to(roomId).emit('recieveCMD', message);

@@ -12,4 +12,4 @@ const socketHandler = (server) => {
     });
 };
 
-module.exports = { socketHandler }; // Ensure this is correctly exporting the function
+module.exports = socketHandler;
