@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: client.dockerfile
+    ports:
+      - "3000:3000"
+
+  server:
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
