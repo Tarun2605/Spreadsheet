@@ -23,6 +23,7 @@ const { createPremiumUser } = require('../controller/premiumUser/createPremiumUs
 const { getUserDetails } = require('../controller/user/getUserDetails');
 const { getUsers } = require('../controller/user/getUsers');
 const { editUser } = require('../controller/user/editUser');
+const { getWorkbookDetails } = require('../controller/workbook/getWorkbookDetails');
 //#endregion
 
 //#region user routes
@@ -43,6 +44,7 @@ router.put('/updateTeam', jwtWare, updateTeam);
 router.post('/createWorkbook', validate(createWorkBookSchema), jwtWare, createWorkbook);
 router.get('/getUserWorkbook', jwtWare, getUserWorkbook);
 router.put('/updateWorkbook/:id', validate(createSheetSchema), jwtWare, updateWorkbook);
+router.get('/getWorkbook/:workbookId', jwtWare, getWorkbookDetails);
 //#endregion
 
 //#region sheet

@@ -11,16 +11,21 @@ const workbookSchema = new Schema({
         type: String,
         required: true
     },
-    sheets: [
+    timeline: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Sheet',
+            //mixed type
+            type: Schema.Types.Mixed,
             required: false
         }
     ],
+
     teamId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team',
+        required: false
+    },
+    roomId: {
+        type: String,
         required: false
     },
     createdAt: {
