@@ -4,13 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { AxiosWrapperProvider } from './Utils/AxiosWrapper';
+import { SocketProvider } from './Utils/SocketWrapper';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AxiosWrapperProvider>
+      <SocketProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SocketProvider>
+    </AxiosWrapperProvider>
   </React.StrictMode>
 );
 

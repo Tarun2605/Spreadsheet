@@ -5,15 +5,16 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const jwtWare = async (req, res, next) => {
     try {
-        const authHeader = req.headers.authorization;
+        console.log(req.headers);
+        const authHeader = req.headers.accesstoken;
         if (!authHeader) {
             return res.status(401).json({ message: 'Authorization header missing' });
         }
 
-        const token = authHeader.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ message: 'Token missing' });
-        }
+        const token = authHeader;
+        // // if (!token) {
+        // //     return res.status(401).json({ message: 'Token missing' });
+        // }
 
         jwt.verify(token, JWT_SECRET, async (err, decoded) => {
             if (err) {

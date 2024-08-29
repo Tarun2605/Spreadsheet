@@ -8,15 +8,15 @@ const JWT_EXPIRATION = process.env.JWT_EXPIRATION;
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        var token = req.headers.authorization;
+        // console.log(req);
+        var token = req.headers.accesstoken;
         if (token) {
-            token = token.split(' ')[1];
             console.log(token);
             jwt.verify(token, JWT_SECRET, async (err, decoded) => {
                 if (err) {
                     return res.status(401).json({ message: 'Invalid token' });
                 }
-
+                console.log(decoded);
                 const user = await User.findById(decoded.id);
                 if (!user) {
                     return res.status(404).json({ message: 'User not found' });
@@ -33,7 +33,9 @@ exports.login = async (req, res) => {
                 });
             });
         } else {
+            console.log(email, password);
             const user = await User.findOne({ email });
+            console.log(user);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }

@@ -20,11 +20,17 @@ const { createSheet } = require('../controller/sheets/createSheet');
 const createSheetSchema = require('../schema/createSheetSchema');
 const { deleteSheet } = require('../controller/sheets/deleteSheet');
 const { createPremiumUser } = require('../controller/premiumUser/createPremiumUser');
+const { getUserDetails } = require('../controller/user/getUserDetails');
+const { getUsers } = require('../controller/user/getUsers');
+const { editUser } = require('../controller/user/editUser');
 //#endregion
 
 //#region user routes
 router.post('/register', validate(userSchema), createUser);
-router.post('/login', validate(loginSchema), login);
+router.post('/login', login);
+router.get('/getUserDetails', jwtWare, getUserDetails);
+router.get('/getUsers', jwtWare, getUsers);
+router.post('/editUser', jwtWare, editUser);
 //#endregion
 
 //#region team routes

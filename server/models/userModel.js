@@ -26,6 +26,10 @@ const userSchema = new Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+    profilePic: {
+        type: String,
+        required: false
     }
 });
 
