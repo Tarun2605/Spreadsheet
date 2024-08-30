@@ -5,6 +5,8 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
 import SpreadSheetPage from './Pages/SpreadSheetPage';
 import Loginpage from './Pages/Loginpage';
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from 'react-toastify';
 function App() {
   return (
     <Box sx={{
@@ -13,10 +15,24 @@ function App() {
     }}>
       <Routes>
         <Route path="/" element={<Loginpage />} />
-        <Route path="/spreadsheet" element={<SpreadSheetPage />} />
+        <Route path="/spreadsheet/:id" element={<SpreadSheetPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="*" element={<div>Not Found</div>} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </Box>
   );
 }
