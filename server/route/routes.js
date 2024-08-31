@@ -25,6 +25,9 @@ const { getUsers } = require('../controller/user/getUsers');
 const { editUser } = require('../controller/user/editUser');
 const { getWorkbookDetails } = require('../controller/workbook/getWorkbookDetails');
 const { sendOtp } = require('../controller/forgotPassword/sendOtp');
+const { getWorkbookByRoom } = require('../controller/workbook/getWorkbookByRoom');
+const { verifyOtp } = require('../controller/forgotPassword/verifyOtp');
+const { inviteMember } = require('../controller/workbook/inviteMember');
 //#endregion
 
 //#region user routes
@@ -33,6 +36,8 @@ router.post('/login', login);
 router.get('/getUserDetails', jwtWare, getUserDetails);
 router.get('/getUsers', jwtWare, getUsers);
 router.post('/editUser', jwtWare, editUser);
+router.post('/sendOtp', jwtWare, sendOtp);
+router.post('/verifyOtp', jwtWare, verifyOtp);
 //#endregion
 
 //#region team routes
@@ -46,6 +51,8 @@ router.post('/createWorkbook', validate(createWorkBookSchema), jwtWare, createWo
 router.get('/getUserWorkbook', jwtWare, getUserWorkbook);
 router.put('/updateWorkbook/:id', validate(createSheetSchema), jwtWare, updateWorkbook);
 router.get('/getWorkbook/:workbookId', jwtWare, getWorkbookDetails);
+router.get('/getWorkbookByRoom/:roomId', jwtWare, getWorkbookByRoom);
+router.post("/invite", jwtWare, inviteMember);
 //#endregion
 
 //#region sheet
@@ -57,8 +64,5 @@ router.delete('/deleteSheet/:id', jwtWare, deleteSheet);
 router.post('/upgradeToPremium', jwtWare, createPremiumUser);
 //#endregion
 
-//#region forgot password routes
-router.get('/forgotPassword', sendOtp);
-//#endregion
 
 module.exports = router;

@@ -7,11 +7,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { AxiosWrapperProvider } from './Utils/AxiosWrapper';
 import { SocketProvider } from './Utils/SocketWrapper';
 import { AppProvider } from './Context/AppContext';
+import { StateContextProvider } from './Context/StateContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AppProvider>
+      {/* <StateContextProvider> */}
       <AxiosWrapperProvider>
         <SocketProvider>
           <BrowserRouter>
@@ -19,6 +21,7 @@ root.render(
           </BrowserRouter>
         </SocketProvider>
       </AxiosWrapperProvider>
+      {/* </StateContextProvider> */}
     </AppProvider>
   </React.StrictMode>
 );

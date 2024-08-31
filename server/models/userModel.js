@@ -30,7 +30,11 @@ const userSchema = new Schema({
     profilePic: {
         type: String,
         required: false
-    }
+    },
+    otp: {
+        type: String,
+        required: false
+    },
 });
 
 userSchema.pre('save', async function (next) {

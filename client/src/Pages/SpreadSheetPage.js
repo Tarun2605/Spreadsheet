@@ -63,7 +63,7 @@ export default function SpreadSheetPage() {
     };
 
     return (
-        <Box sx={{ width: '100%', height: '100%' }}>
+        <Box sx={{ width: '100%', height: '100vh' }}>
             <AppBar position="static" color="primary">
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

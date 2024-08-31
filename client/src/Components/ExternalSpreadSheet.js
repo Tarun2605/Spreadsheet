@@ -26,7 +26,7 @@ export default function ExternalSpreadSheet({ roomId, workBookId }) {
     return (
         <SpreadsheetComponent
             ref={spreadsheetRef}
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '90vh' }}
             //D:Prasun try with images use base64 convertor
             allowImage={false}
             // allowHyperlink={false}
