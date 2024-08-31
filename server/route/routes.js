@@ -24,6 +24,7 @@ const { getUserDetails } = require('../controller/user/getUserDetails');
 const { getUsers } = require('../controller/user/getUsers');
 const { editUser } = require('../controller/user/editUser');
 const { getWorkbookDetails } = require('../controller/workbook/getWorkbookDetails');
+const { sendOtp } = require('../controller/forgotPassword/sendOtp');
 //#endregion
 
 //#region user routes
@@ -54,6 +55,10 @@ router.delete('/deleteSheet/:id', jwtWare, deleteSheet);
 
 //#region premium user routes
 router.post('/upgradeToPremium', jwtWare, createPremiumUser);
+//#endregion
+
+//#region forgot password routes
+router.get('/forgotPassword', sendOtp);
 //#endregion
 
 module.exports = router;
