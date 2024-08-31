@@ -4,9 +4,17 @@ export const cellSave = (spreadsheetRef, args) => {
     }
 };
 
+export const format = (spreadsheetRef, args) => {
+    if (spreadsheetRef.current) {
+        spreadsheetRef.current.format(args.format, args.range);
+    }
+};
 
 export const spreadSheetFunctionsThroughPut = (item, spreadsheetRef) => {
     if (item.action === "cellSave") {
         cellSave(spreadsheetRef, item.eventArgs);
+    }
+    if (item.action === "format") {
+        format(spreadsheetRef, item.eventArgs);
     }
 };
