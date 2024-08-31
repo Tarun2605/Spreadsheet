@@ -15,6 +15,7 @@
     "axios": "^1.7.5",
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
+    "react-awesome-shapes": "^0.1.12",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.26.1",

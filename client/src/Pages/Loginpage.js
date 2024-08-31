@@ -3,6 +3,9 @@ import { Box, Button, CircularProgress, TextField, Typography } from "@mui/mater
 import { AxiosWrapperContext } from "../Utils/AxiosWrapper";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { alignProperty } from "@mui/material/styles/cssUtils";
+import {  Circle, Donut, CircleGrid, Diamond, PolygonCard, Polygon, Star, Cross } from "react-awesome-shapes";
+import "./home.css";
 
 export default function AuthPage() {
     const { apiPost } = useContext(AxiosWrapperContext);
@@ -80,21 +83,51 @@ export default function AuthPage() {
             sx={{
                 height: "100vh",
                 width: "100vw",
-                backgroundColor: "lightblue",
+                background: "linear-gradient(109.6deg, rgb(20, 30, 48) 11.2%, rgb(36, 59, 85) 91.1%)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-            }}
-        >
+                zIndex: -2,
+                position: "relative",
+            }}>
+            <Donut
+                color="#FEBE10"
+                size="300px"
+                width={['60px', '50px', '70px', '700px']}
+                zIndex={-1}
+            />
+            
+            <Diamond
+                color="#018749"
+                size="250px"
+                zIndex={-1}
+            />
+            <Circle
+                color="linear-gradient(135deg, #a5b4fc, #6366f1)"
+                size={['25px', '25px', '25px', '25px']}
+                zIndex={-1}
+            /> 
+            <CircleGrid
+                color="#C04000"
+                size="175px"
+                zIndex={-1}
+            />      
+
             <Box
                 sx={{
-                    width: { xs: "90%", sm: "400px" },
+                    alignProperty: "center",
+                    height: isLogin ? "20rem" : "25rem",
+                    width: { xs: "90%", sm: isLogin ? "25rem" : "25rem" },
                     padding: "20px",
                     backgroundColor: "white",
                     borderRadius: "8px",
                     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                     transition: "transform 0.5s",
-                    transform: isLogin ? "translateX(0)" : "translateX(-100%)",
+                    transform: isLogin ? "translateX(0)" : "translateX(0)",
+                    "@media (max-width: 600px)": {
+                        width: "90%",
+                        transform: isLogin ? "translateX(0)" : "translateX(0)",
+                    },
                 }}
             >
                 <Typography variant="h5" sx={{ marginBottom: "20px", textAlign: "center" }}>
@@ -132,12 +165,7 @@ export default function AuthPage() {
                     sx={{ marginBottom: "20px" }}
                 />
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    onClick={handleSubmit}
-                >
+                <Button variant="contained" color="primary" fullWidth onClick={handleSubmit}>
                     {isLogin ? "Login" : "Register"}
                 </Button>
 

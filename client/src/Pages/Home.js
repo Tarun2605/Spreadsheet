@@ -16,6 +16,9 @@ import { convertToBase64 } from "../Utils/base64";
 import { toast } from "react-toastify";
 import { CiSquarePlus } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { alignProperty } from "@mui/material/styles/cssUtils";
+import {  Circle, Donut, CircleGrid, Diamond, PolygonCard, Polygon, Star, Cross } from "react-awesome-shapes";
+import "./home.css";
 
 export default function Home() {
     const { apiGet, apiPost } = useContext(AxiosWrapperContext);
@@ -24,6 +27,7 @@ export default function Home() {
     const [openCreateWorkbookDialog, setOpenCreateWorkbookDialog] = useState(false);
     const [workbookTitle, setWorkbookTitle] = useState("");
     const navigate = useNavigate();
+    
 
     const fetchData = async () => {
         try {
@@ -93,12 +97,13 @@ export default function Home() {
                 height: "100vh",
                 display: "flex",
                 flexDirection: "column",
+                zIndex: -2,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "lightblue",
+                background: "linear-gradient(109.6deg, rgb(20, 30, 48) 11.2%, rgb(36, 59, 85) 91.1%)",
                 overflowY: "scroll",
                 "&::-webkit-scrollbar": {
-                    width: "0.5em",
+                    width: "0.1rem",
                 },
                 "&::-webkit-scrollbar-track": {
                     boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
@@ -110,6 +115,31 @@ export default function Home() {
                 position: "relative",
             }}
         >
+            <Donut
+                color="#FEBE10"
+                size="300px"
+                width={['60px', '50px', '70px', '700px']}
+                zIndex={-1}
+            />
+            
+            <Diamond
+                color="#018749"
+                size="250px"
+                zIndex={-1}
+            />
+            <Circle
+            
+                color=" #C5630E"
+                size={['25px', '25px', '25px', '25px']}
+                zIndex={-1}
+            /> 
+            <CircleGrid
+                color="#C04000"
+                size="175px"
+                zIndex={-1}
+            />      
+
+        
             <Box
                 sx={{
                     width: "70%",
@@ -119,6 +149,7 @@ export default function Home() {
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: "10px",
+                    boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)",
                 }}
             >
                 <Box
@@ -141,15 +172,29 @@ export default function Home() {
                     <label htmlFor="avatar-upload">
                         <Avatar
                             sx={{
-                                width: "80%",
-                                height: "100%",
-                                marginBottom: "20px",
+                                width: 200,
+                                height: 200,
+                                marginBottom: "10px",
                                 cursor: "pointer",
-                                marginLeft: "auto",
-                                marginRight: "auto",
+                                "&:hover": {
+                                    "&::after": {
+                                        content: "'Add Image'",
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                        backgroundColor: "rgba(0, 0, 0, 0.7)",
+                                        color: "white",
+                                        padding: "5px 10px",
+                                        borderRadius: "5px",
+                                        fontSize: "14px",
+                                    },
+                                },
                             }}
                             src={`data:image/jpeg;base64,${userDetails?.user?.profilePic}`}
-                        />
+                        >
+                            {userDetails?.user?.name[0]}
+                        </Avatar>
                     </label>
                     <Typography variant="h5" sx={{ marginBottom: "20px" }}>
                         {userDetails?.user?.name}
@@ -163,17 +208,22 @@ export default function Home() {
                         width: "50%",
                         height: "100%",
                         display: "flex",
+                        padding: "20px",
                         flexDirection: "column",
                         alignItems: "center",
                         overflowY: "scroll",
                     }}
                 >
+                    <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                        Start a new Project
+                    </Typography>
                     <Box
                         sx={{
                             width: "100%",
                             height: "100px",
                             backgroundColor: "lightgray",
                             marginBottom: "10px",
+                            borderRadius: "10px",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -203,10 +253,12 @@ export default function Home() {
                             sx={{
                                 width: "100%",
                                 height: "100px",
+                                borderRadius: "10px",
                                 backgroundColor: "lightgray",
                                 marginBottom: "10px",
                                 display: "flex",
-                                justifyContent: "space-between",
+                                flexDirection: "column",
+                                justifyContent: "center",
                                 padding: "10px",
                                 alignItems: "center",
                                 "&:hover": {
@@ -218,16 +270,15 @@ export default function Home() {
                                 navigate(`/spreadsheet/${workbook._id}`);
                             }}
                         >
-                            <Typography variant="h6">{workbook.title}</Typography>
-                            <Typography variant="body1">{new Date(workbook.createdAt).toDateString()}</Typography>
+                            <Typography variant="h6" >{workbook.title}</Typography>
+                            <Typography variant="caption"  >
+                                {new Date(workbook.createdAt).toDateString()}
+                            </Typography>
                         </Box>
                     ))}
                 </Box>
             </Box>
-            <Dialog
-                open={openCreateWorkbookDialog}
-                onClose={() => setOpenCreateWorkbookDialog(false)}
-            >
+            <Dialog open={openCreateWorkbookDialog} onClose={() => setOpenCreateWorkbookDialog(false)}>
                 <DialogTitle>Create New Workbook</DialogTitle>
                 <DialogContent>
                     <TextField

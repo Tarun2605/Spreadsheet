@@ -1,0 +1,27 @@
+.anim-shape-donut {
+    transform: translate(-20rem, -9rem);
+}
+.anim-shape-circle{ 
+    transform: translate(-20rem, 6rem);
+    animation: 10s linear infinite;
+    animation-direction: alternate;
+    animation-name: moveUpDown;
+}
+
+@keyframes moveUpDown {
+    0% {
+        transform: translate(-20rem, 6rem);
+    }
+    50% {
+        transform: translate(-20rem, 4rem);
+    }
+    100% {
+        transform: translate(-20rem, 6rem);
+    }
+}
+.anim-shape-circlegrid { 
+    transform: translate(21rem, -6rem);
+}
+.anim-shape-diamond {
+    transform: translate(18rem, 12rem);
+}
