@@ -28,6 +28,7 @@ const { sendOtp } = require('../controller/forgotPassword/sendOtp');
 const { getWorkbookByRoom } = require('../controller/workbook/getWorkbookByRoom');
 const { verifyOtp } = require('../controller/forgotPassword/verifyOtp');
 const { inviteMember } = require('../controller/workbook/inviteMember');
+const { askQuery } = require('../controller/query/askQuery');
 //#endregion
 
 //#region user routes
@@ -64,5 +65,8 @@ router.delete('/deleteSheet/:id', jwtWare, deleteSheet);
 router.post('/upgradeToPremium', jwtWare, createPremiumUser);
 //#endregion
 
+//#region askQuery
+router.post('/askQuery', jwtWare, askQuery);
+//#endregion
 
 module.exports = router;

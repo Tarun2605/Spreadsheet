@@ -1,3 +1,4 @@
+import React, { useContext, useEffect, useState } from "react";
 import {
     Avatar,
     Box,
@@ -10,12 +11,14 @@ import {
     Typography,
     TextField,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
 import { AxiosWrapperContext } from "../Utils/AxiosWrapper";
 import { convertToBase64 } from "../Utils/base64";
 import { toast } from "react-toastify";
 import { CiSquarePlus } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { FullWindowWithMeteors } from "../Components/FullWindowWithMetoers";
+import { Fullscreen } from "@mui/icons-material";
+import { FullscreenBackground } from "../Components/FullScreenBackground";
 
 export default function Home() {
     const { apiGet, apiPost } = useContext(AxiosWrapperContext);
@@ -65,6 +68,7 @@ export default function Home() {
         fetchData();
         toast.success("Workbook created successfully");
     };
+
     useEffect(() => {
         fetchData();
     }, [apiGet]);
@@ -78,7 +82,7 @@ export default function Home() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "lightblue",
+                    backgroundColor: "#f0f4f8",
                 }}
             >
                 <CircularProgress />
@@ -93,10 +97,10 @@ export default function Home() {
                 height: "100vh",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "lightblue",
-                overflowY: "scroll",
+                backgroundColor: "transparent",
+                padding: "16px",
+                overflowY: "auto",
                 "&::-webkit-scrollbar": {
                     width: "0.5em",
                 },
@@ -108,27 +112,35 @@ export default function Home() {
                     outline: "1px solid slategrey",
                 },
                 position: "relative",
+                zIndex: 0,
             }}
         >
+            {/* <FullWindowWithMeteors /> */}
+            <FullscreenBackground />
             <Box
                 sx={{
-                    width: "70%",
-                    height: "70%",
-                    backgroundColor: "white",
+                    // maxWidth: "600px",
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "transparent",
                     display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "10px",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    borderRadius: "12px",
+                    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+                    overflow: "hidden",
+                    padding: "16px",
+                    // position: "absolute",
                 }}
             >
                 <Box
                     sx={{
-                        width: "50%",
-                        height: "100%",
+                        width: { xs: "100%", sm: "30%" },
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "center",
                         alignItems: "center",
+                        padding: "16px",
+                        borderRight: { xs: "none", sm: "1px solid #ddd" },
                     }}
                 >
                     <input
@@ -141,85 +153,88 @@ export default function Home() {
                     <label htmlFor="avatar-upload">
                         <Avatar
                             sx={{
-                                width: "80%",
-                                height: "100%",
-                                marginBottom: "20px",
+                                width: { xs: "120px", sm: "300px" },
+                                height: { xs: "120px", sm: "300px" },
+                                marginBottom: "16px",
                                 cursor: "pointer",
-                                marginLeft: "auto",
-                                marginRight: "auto",
+                                border: "3px solid #ddd",
+                                //position the image in the center
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                //fir the image to the container
+                                objectFit: "contain",
                             }}
                             src={`data:image/jpeg;base64,${userDetails?.user?.profilePic}`}
                         />
                     </label>
-                    <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                    <Typography variant="h6" sx={{ marginBottom: "8px", textAlign: "center", color: "white" }}>
                         {userDetails?.user?.name}
                     </Typography>
-                    <Typography variant="body1" sx={{ marginBottom: "20px" }}>
+                    <Typography variant="body2" sx={{ textAlign: "center", color: "white" }}>
                         {userDetails?.user?.email}
                     </Typography>
                 </Box>
                 <Box
                     sx={{
-                        width: "50%",
-                        height: "100%",
+                        width: { xs: "100%", sm: "70%" },
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "center",
-                        overflowY: "scroll",
+                        alignItems: "stretch",
+                        padding: "16px",
                     }}
                 >
                     <Box
                         sx={{
-                            width: "100%",
-                            height: "100px",
-                            backgroundColor: "lightgray",
-                            marginBottom: "10px",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
+                            height: "60px",
+                            backgroundColor: "#f1f1f1",
+                            borderRadius: "8px",
+                            marginBottom: "16px",
+                            cursor: "pointer",
+                            transition: "background-color 0.3s",
                             "&:hover": {
-                                backgroundColor: "lightblue",
-                                cursor: "pointer",
+                                backgroundColor: "#e1e1e1",
                             },
                         }}
-                        onClick={() => {
-                            setOpenCreateWorkbookDialog(true);
-                        }}
+                        onClick={() => setOpenCreateWorkbookDialog(true)}
                     >
                         <CiSquarePlus
                             style={{
-                                fontSize: "50px",
-                                cursor: "pointer",
-                                color: "black",
-                                padding: "10px",
-                                marginLeft: "auto",
-                                marginRight: "auto",
+                                fontSize: "36px",
+                                color: "#333",
                             }}
                         />
+                        <Typography variant="body1" sx={{ marginLeft: "8px", fontWeight: "bold" }}>
+                            Create New Workbook
+                        </Typography>
                     </Box>
                     {userDetails?.workbooks?.map((workbook) => (
                         <Box
                             key={workbook._id}
                             sx={{
-                                width: "100%",
-                                height: "100px",
-                                backgroundColor: "lightgray",
-                                marginBottom: "10px",
                                 display: "flex",
                                 justifyContent: "space-between",
-                                padding: "10px",
                                 alignItems: "center",
+                                backgroundColor: "#fff",
+                                border: "1px solid #ddd",
+                                borderRadius: "8px",
+                                padding: "12px",
+                                marginBottom: "12px",
+                                cursor: "pointer",
+                                transition: "background-color 0.3s",
                                 "&:hover": {
-                                    backgroundColor: "lightblue",
-                                    cursor: "pointer",
+                                    backgroundColor: "#f5f5f5",
                                 },
                             }}
-                            onClick={() => {
-                                navigate(`/spreadsheet/${workbook._id}`);
-                            }}
+                            onClick={() => navigate(`/spreadsheet/${workbook._id}`)}
                         >
                             <Typography variant="h6">{workbook.title}</Typography>
-                            <Typography variant="body1">{new Date(workbook.createdAt).toDateString()}</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {new Date(workbook.createdAt).toDateString()}
+                            </Typography>
                         </Box>
                     ))}
                 </Box>

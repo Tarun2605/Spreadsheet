@@ -15,3 +15,21 @@ services:
       - "5000:5000"
     environment:
       - NODE_ENV=production
+
+  gemini-server:
+    build:
+      context: ./gemini-server
+      dockerfile: gemini-server.dockerfile
+    ports:
+      - "1965:1965"
+    environment:
+      - NODE_ENV=production
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest

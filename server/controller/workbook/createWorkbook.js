@@ -13,9 +13,9 @@ exports.createWorkbook = async (req, res) => {
             return res.status(400).json({ message: 'Workbook with this title already exists' });
         }
         const existingUserWorkbooks = await Workbook.find({ createdBy: userId });
-        if (existingUserWorkbooks.length >= 5 && !premiumUser) {
-            return res.status(400).json({ message: 'You have reached the maximum number of workbooks allowed for free users' });
-        }
+        // if (existingUserWorkbooks.length >= 5 && !premiumUser) {
+        //     return res.status(400).json({ message: 'You have reached the maximum number of workbooks allowed for free users' });
+        // }
         // const team = await Team.create({
         //     name: "default team",
         //     admin: userId,

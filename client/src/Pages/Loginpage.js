@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, TextField, Tabs, Tab } from "@mui/material";
 import { AxiosWrapperContext } from "../Utils/AxiosWrapper";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { BackgroundGradientAnimation } from "../Components/ui/background-gradient-animation";
 
 export default function AuthPage() {
     const { apiPost } = useContext(AxiosWrapperContext);
@@ -52,7 +53,7 @@ export default function AuthPage() {
             } catch (error) {
                 console.log(error);
             } finally {
-                setLoading(false); // Stop loading after the request completes
+                setLoading(false);
             }
         };
         loginByToken();
@@ -80,75 +81,121 @@ export default function AuthPage() {
             sx={{
                 height: "100vh",
                 width: "100vw",
-                backgroundColor: "lightblue",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                zIndex: 0,
+                backgroundColor: "transparent",
+                position: "relative",
             }}
         >
-            <Box
-                sx={{
-                    width: { xs: "90%", sm: "400px" },
-                    padding: "20px",
-                    backgroundColor: "white",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                    transition: "transform 0.5s",
-                    transform: isLogin ? "translateX(0)" : "translateX(-100%)",
-                }}
-            >
-                <Typography variant="h5" sx={{ marginBottom: "20px", textAlign: "center" }}>
-                    {isLogin ? "Login" : "Register"}
-                </Typography>
+            <BackgroundGradientAnimation />
+            <Box sx={{
+                height: "100vh",
+                width: "100vw",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1,
+                backgroundColor: "transparent",
+                position: "absolute"
+            }}>
 
-                {!isLogin && (
-                    <>
-                        <TextField
-                            fullWidth
-                            label="Name"
-                            name="name"
-                            value={registerData.name}
-                            onChange={handleInputChange}
-                            sx={{ marginBottom: "15px" }}
-                        />
-                    </>
-                )}
-
-                <TextField
-                    fullWidth
-                    label="Email"
-                    name="email"
-                    value={isLogin ? loginData.email : registerData.email}
-                    onChange={handleInputChange}
-                    sx={{ marginBottom: "15px" }}
-                />
-                <TextField
-                    fullWidth
-                    label="Password"
-                    name="password"
-                    type="password"
-                    value={isLogin ? loginData.password : registerData.password}
-                    onChange={handleInputChange}
-                    sx={{ marginBottom: "20px" }}
-                />
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    onClick={handleSubmit}
+                <Box
+                    sx={{
+                        width: { xs: "90%", sm: "400px" },
+                        padding: "20px",
+                        backgroundColor: "rgba(255, 255, 255, 0.5)",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                    }}
                 >
-                    {isLogin ? "Login" : "Register"}
-                </Button>
+                    <Tabs
+                        value={isLogin ? 0 : 1}
+                        onChange={(event, newValue) => setIsLogin(newValue === 0)}
+                        variant="fullWidth"
+                        indicatorColor="primary"
+                        textColor="primary"
+                        sx={{ marginBottom: "20px" }}
+                    >
+                        <Tab label="Login" />
+                        <Tab label="Register" />
+                    </Tabs>
 
-                <Button
-                    sx={{ marginTop: "10px", textTransform: "none" }}
-                    fullWidth
-                    onClick={() => setIsLogin(!isLogin)}
-                >
-                    {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
-                </Button>
+                    <Box
+                        sx={{
+                            transition: "transform 0.5s",
+                        }}
+                    >
+                        {isLogin ? (
+                            <>
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    name="email"
+                                    value={loginData.email}
+                                    onChange={handleInputChange}
+                                    sx={{ marginBottom: "15px" }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Password"
+                                    name="password"
+                                    type="password"
+                                    value={loginData.password}
+                                    onChange={handleInputChange}
+                                    sx={{ marginBottom: "20px" }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    onClick={handleSubmit}
+                                >
+                                    Login
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <TextField
+                                    fullWidth
+                                    label="Name"
+                                    name="name"
+                                    value={registerData.name}
+                                    onChange={handleInputChange}
+                                    sx={{ marginBottom: "15px" }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    name="email"
+                                    value={registerData.email}
+                                    onChange={handleInputChange}
+                                    sx={{ marginBottom: "15px" }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Password"
+                                    name="password"
+                                    type="password"
+                                    value={registerData.password}
+                                    onChange={handleInputChange}
+                                    sx={{ marginBottom: "20px" }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    onClick={handleSubmit}
+                                >
+                                    Register
+                                </Button>
+                            </>
+                        )}
+                    </Box>
+                </Box>
             </Box>
         </Box>
+        // </BackgroundGradientAnimation>
     );
 }

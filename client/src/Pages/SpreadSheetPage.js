@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, Box, CircularProgress } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, Box, CircularProgress, TextField } from '@mui/material';
 import { IoPersonAddOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { AxiosWrapperContext } from '../Utils/AxiosWrapper';
@@ -11,11 +11,12 @@ import ExternalSpreadSheet from '../Components/ExternalSpreadSheet';
 import { AppContext } from '../Context/AppContext';
 import { cellSave, spreadSheetFunctionsThroughPut } from '../Utils/SpreadSheetFunctions';
 
-
 export default function SpreadSheetPage() {
     const [workBookDetails, setWorkBookDetails] = useState({});
     const [loading, setLoading] = useState(true); // Loading state
-    const { apiGet } = useContext(AxiosWrapperContext);
+    const [isEditingTitle, setIsEditingTitle] = useState(false); // State to toggle edit mode
+    const [newTitle, setNewTitle] = useState(''); // State for new title input
+    const { apiGet, apiPut } = useContext(AxiosWrapperContext);
     const { isConnected } = useSocket();
     const location = useLocation();
     const workBookId = location.pathname.split('/')[2];
@@ -23,11 +24,13 @@ export default function SpreadSheetPage() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const { joinRoom } = useSocket();
     const { spreadsheetRef } = useContext(AppContext);
+
     useEffect(() => {
         const getWorkBookDetails = async () => {
             try {
                 const response = await apiGet(`api/getWorkbook/${workBookId}`);
                 setWorkBookDetails(response.data);
+                setNewTitle(response.data.title); // Initialize newTitle with the current title
                 if (isConnected) {
                     joinRoom(`${response.data.roomId}`);
                 }
@@ -45,7 +48,6 @@ export default function SpreadSheetPage() {
         getWorkBookDetails();
     }, [isConnected, workBookId, joinRoom, apiGet, spreadsheetRef]);
 
-
     const handleProfileClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -62,13 +64,58 @@ export default function SpreadSheetPage() {
         setDialogOpen(false);
     };
 
+    const handleTitleClick = () => {
+        setIsEditingTitle(true);
+    };
+
+    const handleTitleChange = (event) => {
+        setNewTitle(event.target.value);
+    };
+
+    const handleTitleSave = async () => {
+        try {
+            await apiPut(`api/updateWorkbook/${workBookId}`, { title: newTitle });
+            setWorkBookDetails((prev) => ({ ...prev, title: newTitle }));
+            setIsEditingTitle(false);
+        } catch (error) {
+            console.error("Error updating title:", error);
+        }
+    };
+
+    const handleTitleCancel = () => {
+        setNewTitle(workBookDetails.title); // Reset to the previous title
+        setIsEditingTitle(false);
+    };
+
     return (
         <Box sx={{ width: '100%', height: '100vh' }}>
             <AppBar position="static" color="primary">
                 <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        {workBookDetails.title || "Loading..."}
-                    </Typography>
+                    {isEditingTitle ? (
+                        <Box sx={{ flexGrow: 1 }}>
+                            <TextField
+                                value={newTitle}
+                                onChange={handleTitleChange}
+                                onBlur={handleTitleCancel}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') handleTitleSave();
+                                }}
+                                autoFocus
+                                variant="outlined"
+                                size="small"
+                                sx={{ width: '100%' }}
+                            />
+                        </Box>
+                    ) : (
+                        <Typography
+                            variant="h6"
+                            component="div"
+                            sx={{ flexGrow: 1, cursor: 'pointer' }}
+                            onClick={handleTitleClick}
+                        >
+                            {workBookDetails.title || "Loading..."}
+                        </Typography>
+                    )}
                     <IconButton
                         color="inherit"
                         onClick={handleDialogOpen}
