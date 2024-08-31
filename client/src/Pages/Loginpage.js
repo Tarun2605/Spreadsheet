@@ -87,7 +87,7 @@ export default function AuthPage() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                zIndex: -2,
+                zIndex: 1,
                 position: "relative",
             }}>
             <Donut
@@ -128,6 +128,7 @@ export default function AuthPage() {
                         width: "90%",
                         transform: isLogin ? "translateX(0)" : "translateX(0)",
                     },
+                    zIndex: 1,
                 }}
             >
                 <Typography variant="h5" sx={{ marginBottom: "20px", textAlign: "center" }}>

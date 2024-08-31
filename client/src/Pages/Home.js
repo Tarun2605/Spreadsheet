@@ -113,6 +113,7 @@ export default function Home() {
                     outline: "1px solid slategrey",
                 },
                 position: "relative",
+                zIndex: 1,
             }}
         >
             <Donut
@@ -150,6 +151,7 @@ export default function Home() {
                     alignItems: "center",
                     borderRadius: "10px",
                     boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)",
+                    zIndex: 1,
                 }}
             >
                 <Box
