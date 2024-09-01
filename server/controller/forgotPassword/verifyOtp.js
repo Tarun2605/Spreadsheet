@@ -2,8 +2,7 @@ const User = require('../../models/userModel');
 const bcrypt = require('bcrypt');
 exports.verifyOtp = async (req, res) => {
     try {
-        const { otp, newPassword } = req.body;
-        const email = req.user.email;
+        const { otp, newPassword, email } = req.body;
         const user = await User.findOne({ email });
         const isValid = await bcrypt.compare(otp, user.otp);
         if (isValid) {

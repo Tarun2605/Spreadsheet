@@ -4,7 +4,7 @@ import { AxiosWrapperContext } from "../Utils/AxiosWrapper";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "../Components/ui/background-gradient-animation";
-
+import Typography from "@mui/material/Typography";
 export default function AuthPage() {
     const { apiPost } = useContext(AxiosWrapperContext);
     const [isLogin, setIsLogin] = useState(true);
@@ -37,11 +37,20 @@ export default function AuthPage() {
         try {
             const response = await apiPost(url, data);
             console.log("Response:", response.data);
-            toast.success("Success");
+            // toast.success("Success");
             navigate("/home");
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
             console.error("Error:", error.response?.data || error.message);
+        }
+    };
+
+    const handleForgotPassword = async () => {
+        try {
+            navigate("/verify-otp");
+        } catch (error) {
+            console.error("Error:", error.response?.data || error.message);
+
         }
     };
 
@@ -89,6 +98,20 @@ export default function AuthPage() {
                 position: "relative",
             }}
         >
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: "50px",
+                    left: "45%",
+                    width: "150px",
+                    height: "150px",
+                    zIndex: 1,
+                    // backgroundColor: "lightblue",
+                    opacity: 0.5,
+                    borderRadius: "50%",
+                }}>
+                <img src={require("../Assets/cg logo.png")} alt="logo" style={{ width: "100%", height: "100%", borderRadius: "50%" }} />
+            </Box>
             <BackgroundGradientAnimation />
             <Box sx={{
                 height: "100vh",
@@ -105,7 +128,7 @@ export default function AuthPage() {
                     sx={{
                         width: { xs: "90%", sm: "400px" },
                         padding: "20px",
-                        backgroundColor: "rgba(255, 255, 255, 0.5)",
+                        backgroundColor: "rgba(255, 255, 255, 0.7)",
                         borderRadius: "8px",
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                     }}
@@ -144,13 +167,25 @@ export default function AuthPage() {
                                     type="password"
                                     value={loginData.password}
                                     onChange={handleInputChange}
-                                    sx={{ marginBottom: "20px" }}
+                                    sx={{ marginBottom: "10px" }}
                                 />
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        color: "blue"
+                                    }}
+                                    onClick={handleForgotPassword}
+                                >
+                                    Forgot Password?
+                                </Typography>
                                 <Button
                                     variant="contained"
                                     color="primary"
                                     fullWidth
                                     onClick={handleSubmit}
+                                    sx={{
+                                        marginTop: "10px",
+                                    }}
                                 >
                                     Login
                                 </Button>

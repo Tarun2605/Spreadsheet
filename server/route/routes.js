@@ -37,8 +37,8 @@ router.post('/login', login);
 router.get('/getUserDetails', jwtWare, getUserDetails);
 router.get('/getUsers', jwtWare, getUsers);
 router.post('/editUser', jwtWare, editUser);
-router.post('/sendOtp', jwtWare, sendOtp);
-router.post('/verifyOtp', jwtWare, verifyOtp);
+router.post('/sendOtp', sendOtp);
+router.post('/verifyOtp', verifyOtp);
 //#endregion
 
 //#region team routes

@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, Box, CircularProgress, TextField } from '@mui/material';
 import { IoPersonAddOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import { AxiosWrapperContext } from '../Utils/AxiosWrapper';
+import { AxiosWrapperContext, clearAuthToken } from '../Utils/AxiosWrapper';
 import { useSocket } from '../Utils/SocketWrapper';
 import AddUserDialog from '../Components/AddUserDialog';
 import '../App.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ExternalSpreadSheet from '../Components/ExternalSpreadSheet';
 import { AppContext } from '../Context/AppContext';
 import { cellSave, spreadSheetFunctionsThroughPut } from '../Utils/SpreadSheetFunctions';
@@ -16,6 +16,7 @@ export default function SpreadSheetPage() {
     const [loading, setLoading] = useState(true); // Loading state
     const [isEditingTitle, setIsEditingTitle] = useState(false); // State to toggle edit mode
     const [newTitle, setNewTitle] = useState(''); // State for new title input
+    const [roomId, setRoomId] = useState('');
     const { apiGet, apiPut } = useContext(AxiosWrapperContext);
     const { isConnected } = useSocket();
     const location = useLocation();
@@ -24,7 +25,7 @@ export default function SpreadSheetPage() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const { joinRoom } = useSocket();
     const { spreadsheetRef } = useContext(AppContext);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const getWorkBookDetails = async () => {
             try {
@@ -33,6 +34,7 @@ export default function SpreadSheetPage() {
                 setNewTitle(response.data.title); // Initialize newTitle with the current title
                 if (isConnected) {
                     joinRoom(`${response.data.roomId}`);
+                    setRoomId(`${response.data.roomId}`);
                 }
                 if (response.data.timeline.length > 0) {
                     response.data.timeline.forEach((item) => {
@@ -133,13 +135,13 @@ export default function SpreadSheetPage() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose}>Home</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        <MenuItem onClick={() => { handleClose(); navigate('/home'); }}>Home</MenuItem>
+                        <MenuItem onClick={() => { handleClose(); clearAuthToken(); navigate("/"); }}>Logout</MenuItem>
                     </Menu>
                 </Toolbar>
             </AppBar>
 
-            <AddUserDialog open={dialogOpen} onClose={handleDialogClose} />
+            <AddUserDialog open={dialogOpen} onClose={handleDialogClose} roomId={roomId} />
 
             <Box sx={{ width: '100%', height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 {loading ? (

@@ -3,13 +3,13 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } 
 import { AxiosWrapperContext } from '../Utils/AxiosWrapper';
 import { toast } from 'react-toastify';
 
-export default function AddUserDialog({ open, onClose }) {
+export default function AddUserDialog({ open, onClose, roomId }) {
     const [email, setEmail] = useState('');
     const { apiPost } = useContext(AxiosWrapperContext);
 
     const handleAddUser = async () => {
         try {
-            await apiPost('api/addUser', { email });
+            await apiPost('api/invite', { email, roomId });
             toast.success('User added successfully');
             onClose();
         } catch (error) {
@@ -35,7 +35,7 @@ export default function AddUserDialog({ open, onClose }) {
                 <Button onClick={onClose} color="secondary">
                     Cancel
                 </Button>
-                <Button onClick={onClose} color="primary">
+                <Button onClick={handleAddUser} color="primary">
                     Add
                 </Button>
             </DialogActions>

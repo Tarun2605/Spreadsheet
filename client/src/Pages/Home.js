@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { FullWindowWithMeteors } from "../Components/FullWindowWithMetoers";
 import { Fullscreen } from "@mui/icons-material";
 import { FullscreenBackground } from "../Components/FullScreenBackground";
+import { BackgroundGradientAnimation } from "../Components/ui/background-gradient-animation";
 
 export default function Home() {
     const { apiGet, apiPost } = useContext(AxiosWrapperContext);
@@ -98,9 +99,11 @@ export default function Home() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
                 backgroundColor: "transparent",
-                padding: "16px",
-                overflowY: "auto",
+                // padding: "16px",
+                overflowY: "hidden",
+                overflowX: "hidden",
                 "&::-webkit-scrollbar": {
                     width: "0.5em",
                 },
@@ -116,20 +119,25 @@ export default function Home() {
             }}
         >
             {/* <FullWindowWithMeteors /> */}
-            <FullscreenBackground />
+            {/* <FullscreenBackground /> */}
+            <BackgroundGradientAnimation />
             <Box
                 sx={{
                     // maxWidth: "600px",
-                    width: "100%",
-                    height: "100%",
+                    width: "95%",
+                    height: "95%",
+                    marginTop: "auto",
                     backgroundColor: "transparent",
                     display: "flex",
                     flexDirection: "row",
                     flexWrap: "wrap",
                     borderRadius: "12px",
-                    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+                    boxShadow: "0 2px 10px rgba(0,0,0,1)",
+                    backgroundColor: 'rgba(0,0,0,0.2)',
                     overflow: "hidden",
                     padding: "16px",
+                    position: "absolute",
+                    zIndex: 1,
                     // position: "absolute",
                 }}
             >
@@ -140,7 +148,7 @@ export default function Home() {
                         flexDirection: "column",
                         alignItems: "center",
                         padding: "16px",
-                        borderRight: { xs: "none", sm: "1px solid #ddd" },
+                        // borderRight: { xs: "none", sm: "1px solid #ddd" },
                     }}
                 >
                     <input

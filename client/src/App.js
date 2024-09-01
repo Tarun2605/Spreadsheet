@@ -8,6 +8,7 @@ import Loginpage from './Pages/Loginpage';
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from 'react-toastify';
 import Premium from './Pages/Premium';
+import VerifyOTP from './Pages/VerifyOTP';
 function App() {
   return (
     <Box sx={{
@@ -20,10 +21,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/premium" element={<Premium />} />
         <Route path="*" element={<div>Not Found</div>} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
       </Routes>
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
+        position="center"
+        autoClose={2500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -4,9 +4,9 @@ const User = require('../../models/userModel');
 const bcrypt = require('bcrypt');
 exports.sendOtp = async (req, res) => {
     try {
-        const email = req.user.email;
+        const email = req.body.email;
         const otp = crypto.randomInt(1000000);
-        await sendMail({ email, otp, type: 'otp', name: req.user.name });
+        await sendMail({ email, otp, type: 'otp', name: 'User' });
         const hashedOtp = await bcrypt.hash(otp.toString(), 10);
         await User.updateOne({ email }, { otp: hashedOtp });
         res.status(200).json({ message: 'Mail sent successfully' });

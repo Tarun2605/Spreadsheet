@@ -6,7 +6,9 @@ import { ShootingStars } from "./ui/shooting-stars";
 
 export function FullscreenBackground() {
     return (
-        <div className="bg-neutral-900 flex flex-col items-center justify-center absolute inset-0 w-full h-full z-[-1]">
+        <div className="flex flex-col items-center justify-center absolute inset-0 w-full h-full z-[-1]" style={{
+            backgroundColor: "rgb(2, 6, 38)",
+        }}>
 
             <ShootingStars />
             <StarsBackground />
